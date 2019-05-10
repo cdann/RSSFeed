@@ -55,9 +55,5 @@ class ArticleViewController: UIViewController, WKNavigationDelegate, UIScrollVie
             navigationController?.setNavigationBarHidden(true, animated: true)
         }
     }
-    
-    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
-        print("TOP")
-    }
 
 }

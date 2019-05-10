@@ -14,20 +14,11 @@ class RSSFeedTableViewController: UITableViewController {
     
     var viewModel: RSSFeedTableViewModel?
     var selectedItem: FeedItem?
-    var activityMonitor: UIActivityIndicatorView?
     
     override func loadView() {
         super.loadView()
-        activityMonitor = UIActivityIndicatorView()
-        tableView.addSubview(activityMonitor!)
-        activityMonitor!.startAnimating()
-        activityMonitor!.style = .gray
-        activityMonitor!.hidesWhenStopped = true
-        activityMonitor!.translatesAutoresizingMaskIntoConstraints = false
-        let xCenterConstraint = NSLayoutConstraint(item: activityMonitor!, attribute: .centerX, relatedBy: .equal, toItem: tableView, attribute: .centerX, multiplier: 1, constant: 0)
-        let yCenterConstraint = NSLayoutConstraint(item: activityMonitor!, attribute: .top, relatedBy: .equal, toItem: tableView, attribute: .top, multiplier: 1, constant: 50)
-        xCenterConstraint.isActive = true
-        yCenterConstraint.isActive = true
+        refreshControl = UIRefreshControl()
+        refreshControl!.addTarget(self, action: #selector(RSSFeedTableViewController.loadFeed), for: .valueChanged)
     }
 
     override func viewDidLoad() {
@@ -36,13 +27,17 @@ class RSSFeedTableViewController: UITableViewController {
         loadFeed()
     }
     
-    func loadFeed() {
-        let afterChanges: () -> () = { [weak self] in
+    @objc func loadFeed() {
+        let changeAfterDataLoaded: () -> () = { [weak self] in
             self?.tableView.reloadData()
-            self?.activityMonitor?.stopAnimating()
+            self?.refreshControl?.endRefreshing()
         }
-        self.activityMonitor?.startAnimating()
-        viewModel!.loadFeed(changeAfterDataLoaded: afterChanges, handleError: alertError(error:))
+        let handleError: (Error) -> () = { [weak self] error in
+            self?.alertError(error: error)
+            self?.refreshControl?.endRefreshing()
+        }
+        self.refreshControl?.beginRefreshing()
+        viewModel!.loadFeed(changeAfterDataLoaded: changeAfterDataLoaded, handleError: handleError)
     }
 
     // MARK: - Table view data source
@@ -56,7 +51,6 @@ class RSSFeedTableViewController: UITableViewController {
     }
     
     func alertError(error: Error) {
-        self.activityMonitor?.stopAnimating()
         let alertController = UIAlertController(title: "Oops ❗️", message: "Veuillez rééssayer plus tard. Erreur: \(error) ", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(okAction)
