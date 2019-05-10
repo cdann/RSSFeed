@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class ArticleViewController: UIViewController, WKNavigationDelegate {
+class ArticleViewController: UIViewController, WKNavigationDelegate, UIScrollViewDelegate {
 
     var webView: WKWebView!
     var activityMonitor: UIActivityIndicatorView!
@@ -19,6 +19,7 @@ class ArticleViewController: UIViewController, WKNavigationDelegate {
         super.loadView()
         webView = WKWebView(frame: view.frame)
         view = webView
+        webView.scrollView.delegate = self
         activityMonitor = UIActivityIndicatorView(style: .gray)
         activityMonitor.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityMonitor)
@@ -39,10 +40,24 @@ class ArticleViewController: UIViewController, WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         activityMonitor!.stopAnimating()
+        self.navigationController!.setNavigationBarHidden(true, animated: true)
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         activityMonitor!.stopAnimating()
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let scrollY = scrollView.panGestureRecognizer.translation(in: scrollView.superview)
+        if (scrollY.y > 0) {
+            navigationController?.setNavigationBarHidden(false, animated: true)
+        } else {
+            navigationController?.setNavigationBarHidden(true, animated: true)
+        }
+    }
+    
+    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
+        print("TOP")
     }
 
 }
