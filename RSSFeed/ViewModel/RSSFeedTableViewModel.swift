@@ -13,7 +13,7 @@ protocol RSSFeedTableViewModel {
     func loadFeed(changeAfterDataLoaded: @escaping () -> (), handleError: @escaping (Error) -> ())
 }
 
-class RSSFeedFromFeedManagerTableViewModel: RSSFeedTableViewModel {
+class FeedFromRSSFeedManagerTableViewModel: RSSFeedTableViewModel {
     var feedItems: [FeedItem] = []
     let feedManager: FeedManager
     

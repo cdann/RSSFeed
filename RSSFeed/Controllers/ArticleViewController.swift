@@ -38,6 +38,8 @@ class ArticleViewController: UIViewController, WKNavigationDelegate, UIScrollVie
         }
     }
     
+     // MARK: - Web view Navigation Delegate
+    
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         activityMonitor!.stopAnimating()
         self.navigationController!.setNavigationBarHidden(true, animated: true)
@@ -46,6 +48,8 @@ class ArticleViewController: UIViewController, WKNavigationDelegate, UIScrollVie
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         activityMonitor!.stopAnimating()
     }
+    
+    // MARK: - Scroll view delegate
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let scrollY = scrollView.panGestureRecognizer.translation(in: scrollView.superview)

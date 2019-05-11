@@ -23,7 +23,7 @@ class RSSFeedTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel = RSSFeedFromFeedManagerTableViewModel(feedManager: RSSFeedManager())
+        viewModel = FeedFromRSSFeedManagerTableViewModel(feedManager: RSSFeedManager())
         loadFeed()
     }
     

@@ -16,7 +16,7 @@ protocol FeedManager {
 }
 
 class RSSFeedManager: FeedManager{
-    let feedUrl = URL(string: "https://medium.com/feed/@waynewbishop")!
+    let feedUrl = URL(string: "https://medium.com/feed/@medium")!
     
     enum RSSError: Error {
         case unexpectedDataFormat
@@ -37,8 +37,6 @@ class RSSFeedManager: FeedManager{
             default:
                 onCompletion(FeedResult.failure(RSSError.unhandledFormatFeed))
             }
-            
-            
         }
     }
     
@@ -53,6 +51,5 @@ class RSSFeedManager: FeedManager{
             return FeedResult.failure(RSSError.unexpectedDataFormat)
         }
         return FeedResult.success(feedItems)
-        
     }
 }

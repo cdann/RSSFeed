@@ -16,6 +16,7 @@ class FeedItem {
     let pubDate: Date
     let description: String?
     let link: String?
+    let content: String?
     
     var date: String {
         get {
@@ -24,19 +25,22 @@ class FeedItem {
         }
     }
     
-    var descriptionString: String? {
-        get {
-            guard let description = self.description else { return nil }
-            return description.replacingOccurrences(of: "<[^>]+>", with: "", options: String.CompareOptions.regularExpression, range: nil)
-        }
+    init(title: String) {
+        self.title = title
+        self.pubDate = Date()
+        self.author = nil
+        self.description = nil
+        self.link = nil
+        self.content = nil
     }
     
-    init(title: String, author: String?, pubDate: Date, description: String?, link: String?) {
+    init(title: String, author: String?, pubDate: Date, description: String?, link: String?, content: String?) {
         self.title = title
         self.author = author
         self.pubDate = pubDate
         self.description = description
         self.link = link
+        self.content = content
     }
     
     convenience init?(item: RSSFeedItem) {
@@ -45,6 +49,6 @@ class FeedItem {
             else {
                 return nil
         }
-        self.init(title: title, author: item.author, pubDate: date, description: item.description, link: item.link)
+        self.init(title: title, author: item.author, pubDate: date, description: item.description, link: item.link, content: item.content?.contentEncoded)
     }
 }
