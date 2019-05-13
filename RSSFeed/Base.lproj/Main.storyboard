@@ -14,7 +14,7 @@
         <!--Feed Table View Controller-->
         <scene sceneID="hzZ-eD-oYP">
             <objects>
-                <tableViewController id="GIY-FR-Aw3" customClass="RSSFeedTableViewController" customModule="RSSFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="RSSFeedTableViewController" id="GIY-FR-Aw3" customClass="RSSFeedTableViewController" customModule="RSSFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="54h-DY-ecN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -62,7 +62,7 @@
         <!--Details View Controller-->
         <scene sceneID="wsb-M4-9m8">
             <objects>
-                <viewController id="6fT-2I-qtQ" customClass="DetailsViewController" customModule="RSSFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailsViewController" id="6fT-2I-qtQ" customClass="DetailsViewController" customModule="RSSFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zla-zu-TRA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -165,6 +165,9 @@
         </namedColor>
         <namedColor name="PrimaryColor">
             <color red="0.94901960784313721" green="0.6470588235294118" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="SecondaryColor">
+            <color red="0.94117647058823528" green="0.54117647058823526" blue="0.29411764705882354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="SecondaryColor">
             <color red="0.94117647058823528" green="0.54117647058823526" blue="0.29411764705882354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

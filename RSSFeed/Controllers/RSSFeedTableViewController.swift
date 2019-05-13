@@ -28,16 +28,21 @@ class RSSFeedTableViewController: UITableViewController {
     }
     
     @objc func loadFeed() {
-        let changeAfterDataLoaded: () -> () = { [weak self] in
-            self?.tableView.reloadData()
+        viewModel!.loadFeed { [weak self] (result) in
+            if case let Result.failure(error) = result {
+                self?.alertError(error: error)
+            } else {
+                self?.tableView.reloadData()
+            }
             self?.refreshControl?.endRefreshing()
         }
-        let handleError: (Error) -> () = { [weak self] error in
-            self?.alertError(error: error)
-            self?.refreshControl?.endRefreshing()
-        }
-        self.refreshControl?.beginRefreshing()
-        viewModel!.loadFeed(changeAfterDataLoaded: changeAfterDataLoaded, handleError: handleError)
+    }
+    
+    func alertError(error: Error) {
+        let alertController = UIAlertController(title: "Oops ❗️", message: "Veuillez rééssayer plus tard. Erreur: \(error) ", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
     }
 
     // MARK: - Table view data source
@@ -48,13 +53,6 @@ class RSSFeedTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.viewModel?.feedItems.count ?? 0
-    }
-    
-    func alertError(error: Error) {
-        let alertController = UIAlertController(title: "Oops ❗️", message: "Veuillez rééssayer plus tard. Erreur: \(error) ", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alertController.addAction(okAction)
-        self.present(alertController, animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

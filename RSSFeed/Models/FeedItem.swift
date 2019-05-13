@@ -52,3 +52,14 @@ class FeedItem {
         self.init(title: title, author: item.author, pubDate: date, description: item.description, link: item.link, content: item.content?.contentEncoded)
     }
 }
+
+extension FeedItem: Equatable {
+    static func == (lhs: FeedItem, rhs: FeedItem) -> Bool {
+        return lhs.title == rhs.title &&
+            lhs.author == rhs.author &&
+            lhs.date == rhs.date &&
+            lhs.content == rhs.content &&
+            lhs.description == rhs.description &&
+            lhs.pubDate == rhs.pubDate
+    }
+}

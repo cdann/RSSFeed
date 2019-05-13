@@ -10,7 +10,7 @@ import Foundation
 
 protocol RSSFeedTableViewModel {
     var feedItems: [FeedItem] { get }
-    func loadFeed(changeAfterDataLoaded: @escaping () -> (), handleError: @escaping (Error) -> ())
+    func loadFeed(handleAfterRequest: @escaping (Result<(), Error>) -> ())
 }
 
 class FeedFromRSSFeedManagerTableViewModel: RSSFeedTableViewModel {
@@ -21,17 +21,14 @@ class FeedFromRSSFeedManagerTableViewModel: RSSFeedTableViewModel {
         self.feedManager = feedManager
     }
     
-    func loadFeed(changeAfterDataLoaded: @escaping () -> (), handleError: @escaping (Error) -> ()) {
+    func loadFeed(handleAfterRequest: @escaping (Result<(), Error>) -> ()) {
         feedManager.getFeeds() {
             [weak self] resultItems in
             DispatchQueue.main.async {
-                switch resultItems{
-                case let .success(items):
+                let result = resultItems.map({ (items) -> () in
                     self?.feedItems = items
-                    changeAfterDataLoaded()
-                case let .failure(error):
-                    handleError(error)
-                }
+                })
+                handleAfterRequest(result)
             }
         }
     }

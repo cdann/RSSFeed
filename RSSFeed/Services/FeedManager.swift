@@ -32,8 +32,7 @@ class RSSFeedManager: FeedManager{
                 onCompletion(FeedResult.failure(error))
             case let Result.rss(feed):
                 let feedResult = self?.rssToFeedItems(rss: feed)
-                let error = FeedResult.failure(RSSError.feedManagerNil)
-                onCompletion(feedResult ?? error)
+                onCompletion(feedResult ?? FeedResult.failure(RSSError.feedManagerNil))
             default:
                 onCompletion(FeedResult.failure(RSSError.unhandledFormatFeed))
             }

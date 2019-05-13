@@ -69,8 +69,10 @@ class DetailsViewController: UIViewController, WKNavigationDelegate {
         if navigationAction.navigationType == WKNavigationType.linkActivated {
             self.urlRequest = navigationAction.request
             performSegue(withIdentifier: toArticleViewSegueIdentifier, sender: nil)
+            decisionHandler(WKNavigationActionPolicy.cancel)
+            return
         }
-        decisionHandler(WKNavigationActionPolicy.cancel)
+        decisionHandler(WKNavigationActionPolicy.allow)
     }
     
 }
