@@ -107,7 +107,7 @@
                         <barButtonItem key="rightBarButtonItem" title="See the source" style="plain" id="GyO-LV-3mE">
                             <color key="tintColor" name="PrimaryColor"/>
                             <connections>
-                                <segue destination="pVm-h4-3wH" kind="show" id="7f0-2a-TpP"/>
+                                <action selector="seeSource:" destination="6fT-2I-qtQ" id="goW-LY-91y"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -115,27 +115,11 @@
                         <outlet property="itemContent" destination="AVf-A6-PCH" id="SuK-Fk-KNg"/>
                         <outlet property="itemDate" destination="He5-hR-jkc" id="aNF-du-Xao"/>
                         <outlet property="itemTitle" destination="CsH-ya-hdG" id="cxt-xt-IDh"/>
-                        <segue destination="pVm-h4-3wH" kind="show" identifier="toArticleView" id="9jv-Ql-tJj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tTD-To-IQL" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="928.98550724637687" y="125.54347826086958"/>
-        </scene>
-        <!--Article View Controller-->
-        <scene sceneID="3qb-aS-vPQ">
-            <objects>
-                <viewController id="pVm-h4-3wH" customClass="ArticleViewController" customModule="RSSFeed" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="14O-Fq-1Qw">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <viewLayoutGuide key="safeArea" id="Hdz-eU-eLL"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="G1h-WU-Byv" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1636" y="126"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nJE-ZC-iBr">
@@ -173,7 +157,4 @@
             <color red="0.94117647058823528" green="0.54117647058823526" blue="0.29411764705882354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="9jv-Ql-tJj"/>
-    </inferredMetricsTieBreakers>
 </document>

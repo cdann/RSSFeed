@@ -27,6 +27,7 @@ class RSSFeedTableViewController: UITableViewController {
         loadFeed()
     }
     
+    /* calls the viewModel to load the feed */
     @objc func loadFeed() {
         viewModel!.loadFeed { [weak self] (result) in
             if case let Result.failure(error) = result {

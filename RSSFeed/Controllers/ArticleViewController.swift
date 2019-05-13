@@ -15,6 +15,7 @@ class ArticleViewController: UIViewController, WKNavigationDelegate, UIScrollVie
     var activityMonitor: UIActivityIndicatorView!
     var request: URLRequest?
     
+    /* creates a webView to be the main view, add an activityMonitor to show progress*/
     override func loadView() {
         super.loadView()
         webView = WKWebView(frame: view.frame)
@@ -50,7 +51,7 @@ class ArticleViewController: UIViewController, WKNavigationDelegate, UIScrollVie
     }
     
     // MARK: - Scroll view delegate
-    
+    /* check the direction of the scroll to display or hide navigation bar*/
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let scrollY = scrollView.panGestureRecognizer.translation(in: scrollView.superview)
         if (scrollY.y > 0) {

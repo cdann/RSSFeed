@@ -10,21 +10,19 @@ import UIKit
 import WebKit
 
 class DetailsViewController: UIViewController, WKNavigationDelegate {
-    let toArticleViewSegueIdentifier = "toArticleView"
     
     var rssFeedItem: FeedItem?
     @IBOutlet weak var itemTitle: UILabel!
     @IBOutlet weak var itemDate: UILabel!
     @IBOutlet weak var itemContent: WKWebView!
-    var urlRequest: URLRequest? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpViewLabels()
         itemContent.navigationDelegate = self
-        
     }
     
+    /* fills the labels and the webview with the content of the item*/
     private func setUpViewLabels() {
         guard let item = self.rssFeedItem, isViewLoaded else {
             return
@@ -51,28 +49,29 @@ class DetailsViewController: UIViewController, WKNavigationDelegate {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        super.prepare(for: segue, sender: sender)
-        if let articleCtrl = segue.destination as? ArticleViewController {
-            if urlRequest == nil {
-                let url = URL(string: self.rssFeedItem?.link ?? "")
-                urlRequest = url != nil ? URLRequest(url: url!) : nil
-            }
-            articleCtrl.request = urlRequest
-            urlRequest = nil
-        }
-    }
+    // MARK: - Navigation to ArticleViewController
     
-    // MARK: - Web view Navigation Delegate
-    
+    /* initializes a fullWebView Controller ArticleViewController when a link is clicked */
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if navigationAction.navigationType == WKNavigationType.linkActivated {
-            self.urlRequest = navigationAction.request
-            performSegue(withIdentifier: toArticleViewSegueIdentifier, sender: nil)
+            let urlRequest = navigationAction.request
             decisionHandler(WKNavigationActionPolicy.cancel)
+            self.initArticleViewCtrl(urlRequest: urlRequest)
             return
         }
         decisionHandler(WKNavigationActionPolicy.allow)
     }
     
+    /*initializes a view controller to see the full article in ArticleViewController*/
+    @IBAction func seeSource(_ sender: Any) {
+        let url = URL(string: self.rssFeedItem?.link ?? "")
+        let request = url != nil ? URLRequest(url: url!) : nil
+        self.initArticleViewCtrl(urlRequest: request)
+    }
+    
+    private func initArticleViewCtrl(urlRequest: URLRequest?) {
+        let viewController = ArticleViewController()
+        viewController.request = urlRequest
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
 }
